@@ -1,10 +1,10 @@
 # lob-price-movement-predictor
 This repository contains the codebase for our HSE Master's thesis project on cryptocurrency price movement forecasting using order book liquidity data and machine learning methods.
 
-Title:
+## Title:
 Predicting Price Movements in the Cryptocurrency Market Using Liquidity Analysis and Machine Learning Methods
 
-Проектная структура:
+### Проектная структура:
 ```
 .
 ├── data_collection/               # Сбор данных со стакана (order book) через REST API Binance
@@ -19,7 +19,7 @@ Predicting Price Movements in the Cryptocurrency Market Using Liquidity Analysis
 └── README.md                      # Документация проекта
 ```
 
-Установка окружения
+### Установка окружения
 ```
 python3 -m venv trading-env
 source trading-env/bin/activate
@@ -27,8 +27,10 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Сбор данных с Binance
+### Сбор данных с Binance
+
 Скрипт: pooling_raw.py
+
 Описание: парсит стакан заявок (order book) и тикер по паре SOL/BTC с биржи Binance.
 Данные сохраняются в двух форматах:
 
@@ -37,7 +39,7 @@ pip install -r requirements.txt
 
 Сбор происходит раз в секунду, по 500 уровней стакана.
 
-Нормализация и препроцессинг
+### Нормализация и препроцессинг
 Скрипт: dataset_compile.py
 Описание: загружает .csv из data_binance_SOLBTC/, нормализует размер заявок и сохраняет .npy:
 
@@ -45,7 +47,7 @@ pip install -r requirements.txt
 
 - datasets/validation/*.npy
 
-Параметры:
+### Параметры:
 
 - max_level = 100 — уровни стакана (±10% диапазон)
 
@@ -61,7 +63,7 @@ pip install -r requirements.txt
 
 - datasets/validation/binance_dataset_all_days_val.npy
 
-Обучение модели
+### Обучение модели
 Для обучения модели использовался ноутбук notebooks/DeepLOB_train_prototype.ipynb, реализующий кастомную архитектуру на основе:
 
 - сверточных слоев (Conv2D),
@@ -69,7 +71,7 @@ pip install -r requirements.txt
 - слоя LSTM для обработки временных зависимостей,
 - выходного слоя с функцией активации softmax для классификации движения цены (вверх / нейтрально / вниз).
 
-Основные параметры обучения:
+### Основные параметры обучения:
 
 - datasample_period = 50 — количество временных шагов в одном сэмпле 
 - prediction_period = 20 — горизонт прогнозирования в секундах
@@ -82,7 +84,7 @@ pip install -r requirements.txt
 
 Вывод: из-за ограниченного количества обучающих данных (~5000 строк) модель показывает невысокую уверенность в предсказаниях. Для улучшения качества рекомендуется собрать больше данных и увеличить число эпох.
 
-Прогноз в реальном времени
+### Прогноз в реальном времени
 Скрипт: live_prediction/lob_live_test.py
 Модель загружается из:
 ```
